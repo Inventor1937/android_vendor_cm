@@ -32,8 +32,8 @@ ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=1
 endif
 
 # Copy over the changelog to the device
-PRODUCT_COPY_FILES += \
-    vendor/cm/CHANGELOG.mkdn:system/etc/CHANGELOG-CM.txt
+# PRODUCT_COPY_FILES += \
+#    vendor/cm/CHANGELOG.mkdn:system/etc/CHANGELOG-CM.txt
 
 # Backup Tool
 PRODUCT_COPY_FILES += \
@@ -74,8 +74,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
 
 # Enable wireless Xbox 360 controller support
-PRODUCT_COPY_FILES += \
-    frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:system/usr/keylayout/Vendor_045e_Product_0719.kl
+# PRODUCT_COPY_FILES += \
+#    frameworks/base/data/keyboards/Vendor_045e_Product_028e.kl:system/usr/keylayout/Vendor_045e_Product_0719.kl
 
 # This is CM!
 PRODUCT_COPY_FILES += \
@@ -105,11 +105,22 @@ PRODUCT_PACKAGES += \
     Profiles \
     WeatherManagerService
 
+# DASH technology and QCMediaPlayer
+ifeq ($(TARGET_ENABLE_QC_AV_ENHANCEMENTS),true)
+	PRODUCT_PACKAGES += \
+		libdashplayer
+	ifeq ($(TARGET_ENABLE_QC_MEDIAPLAYER),true)
+		PRODUCT_PACKAGES += \
+			qcmediaplayer
+		
+		PRODUCT_BOOT_JARS += \
+			qcmediaplayer
+	endif
+endif
+
 # Optional CM packages
 PRODUCT_PACKAGES += \
     libemoji \
-    LiveWallpapersPicker \
-    PhotoTable \
     Terminal
 
 # Include explicitly to work around GMS issues
@@ -119,23 +130,11 @@ PRODUCT_PACKAGES += \
 
 # Custom CM packages
 PRODUCT_PACKAGES += \
-    AudioFX \
     CMSettingsProvider \
-    CMUpdater \
     CustomTiles \
     LineageSetupWizard \
-    Eleven \
-    ExactCalculator \
     Jelly \
-    LiveLockScreenService \
-    LockClock \
-    Trebuchet \
-    WallpaperPicker \
-    WeatherProvider
-
-# Exchange support
-PRODUCT_PACKAGES += \
-    Exchange2
+    WallpaperPicker
 
 # Extra tools in CM
 PRODUCT_PACKAGES += \
@@ -174,14 +173,14 @@ PRODUCT_PACKAGES += \
 endif
 
 # ExFAT support
-WITH_EXFAT ?= true
-ifeq ($(WITH_EXFAT),true)
-TARGET_USES_EXFAT := true
-PRODUCT_PACKAGES += \
-    mount.exfat \
-    fsck.exfat \
-    mkfs.exfat
-endif
+# WITH_EXFAT ?= true
+# ifeq ($(WITH_EXFAT),true)
+# TARGET_USES_EXFAT := true
+# PRODUCT_PACKAGES += \
+#    mount.exfat \
+#    fsck.exfat \
+#    mkfs.exfat
+# endif
 
 # Openssh
 PRODUCT_PACKAGES += \
@@ -225,10 +224,10 @@ PRODUCT_PACKAGES += \
     procrank
 
 # Conditionally build in su
-ifeq ($(WITH_SU),true)
-PRODUCT_PACKAGES += \
-    su
-endif
+# ifeq ($(WITH_SU),true)
+# PRODUCT_PACKAGES += \
+#    su
+# endif
 endif
 
 DEVICE_PACKAGE_OVERLAYS += vendor/cm/overlay/common
