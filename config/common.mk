@@ -60,7 +60,7 @@ PRODUCT_COPY_FILES += \
 
 # Custom init.d script
 PRODUCT_COPY_FILES += \
-    vendor/vertex/prebuilt/common/etc/init.d/99customscript:system/etc/init.d/99customscript
+    vendor/cm/prebuilt/common/etc/init.d/99customscript:system/etc/init.d/99customscript
 
 ifneq ($(TARGET_BUILD_VARIANT),user)
 # userinit support
