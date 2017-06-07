@@ -223,10 +223,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     telephony-ext
 
-# TCP Connection Management
-PRODUCT_PACKAGES += tcmiface
-PRODUCT_BOOT_JARS += tcmiface
-
 # These packages are excluded from user builds
 ifneq ($(TARGET_BUILD_VARIANT),user)
 PRODUCT_PACKAGES += \
